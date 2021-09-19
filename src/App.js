@@ -1,25 +1,30 @@
-import logo from './logo.svg';
 import './App.css';
+import React, { Component } from 'react';
+import Section from './components/Section/Section';
+import Container from './components/Container/Container';
+import ContactForm from './components/ContactForm/ContactForm';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import data from './data/contacts.json';
+import ContactsList from './components/ContactsList/ContactsList';
+
+class App extends Component {
+  state = {
+    contacts: data,
+    filter: '',
+  };
+  render() {
+    return (
+      <Container>
+        <Section title="Phonebook">
+          <ContactForm></ContactForm>
+        </Section>
+
+        <Section title="Contacts">
+          <ContactsList contacts={this.state.contacts}></ContactsList>
+        </Section>
+      </Container>
+    );
+  }
 }
 
 export default App;
