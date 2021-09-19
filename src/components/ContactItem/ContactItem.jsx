@@ -12,6 +12,7 @@ const ContactItem = ({ contacts }) => (
 ContactItem.propTypes = {
   contacts: PropTypes.shape({
     name: PropTypes.string.isRequired,
+    number: PropTypes.string.isRequired
   }),
 };
 
