@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import style from './ContactForm.module.css';
+import { v4 as uuidv4 } from 'uuid';
 
 
 
@@ -9,12 +10,41 @@ class ContactForm extends Component {
         number: '',
         id:''
     }
+
+    handleInputChange = e => {
+        this.setState({
+          [e.currentTarget.name]: e.currentTarget.value,
+        });
+      };
+
+    reset = () => {
+        this.setState({
+          name: '',
+          number: '',
+        });
+      };
+    
+
+    handleSubmitForm = e => {
+        e.preventDefault();
+        const { name, value } = e.currentTarget;
+        this.setState({[name]: value});
+        this.props.onAddContact(this.state);
+        this.reset();
+    }
+
     render() {
+        const { name, number } = this.state;
+        const forNameId = uuidv4();
+        const forNumberId = uuidv4();
         return (
-                <form className={style.form}>
+                <form className={style.form} onSubmit={this.handleSubmitForm}>
                 <label className={style.label}>
                     <span className={style.title}>Name</span>
                     <input
+                        value={name}
+                        id = {forNameId}
+                        onChange={this.handleInputChange}
                         className={style.input}
                         type="text"
                         name="name"
@@ -26,6 +56,9 @@ class ContactForm extends Component {
                 <label className={style.label}>
                     <span className={style.title}>Number</span>
                     <input
+                        value={number}
+                        id = {forNumberId}
+                        onChange={this.handleInputChange}
                         className={style.input}
                         type="tel"
                         name="number"
@@ -34,7 +67,7 @@ class ContactForm extends Component {
                         required
                     />
                 </label>
-                <button className={style.button} type="submit">Add contact</button>
+                <button className={style.button} type="submit" onClick={this.handleSubmitForm}>Add contact</button>
             </form>
         )
     }
